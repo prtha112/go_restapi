@@ -2,15 +2,19 @@ package main
 
 import (
 	"fmt"
+	auth "go_restapi/Auth"
 	"go_restapi/Config"
+	middleware "go_restapi/Middleware"
 	"go_restapi/Models"
 	"go_restapi/Routers"
+	"go_restapi/Seeder"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/pseidemann/finish"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -19,8 +23,26 @@ import (
 var err error
 
 func main() {
+	var err error
+	var env_auth auth.Env
+	var env_middleware middleware.Env
+
+	err = godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error getting env, not comming through %v", err)
+	} else {
+		fmt.Println("We are getting the env values")
+	}
 
 	Config.DB, err = gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+
+	env_auth.Apikey = os.Getenv("API_TOKEN")
+	env_auth.Jwtexpiretime, err = strconv.Atoi(os.Getenv("JWT_EXPIRE_TIME"))
+	if err != nil {
+		env_auth.Jwtexpiretime = 5 // minute
+	}
+	env_auth.Jwtsignature = os.Getenv("JWT_SIGNATURE")
+	env_middleware.Signature = os.Getenv("JWT_SIGNATURE")
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -32,12 +54,10 @@ func main() {
 		timeOut = 30 // second
 	}
 
-	if err != nil {
-		fmt.Println("statuse: ", err)
-	}
-	Config.DB.AutoMigrate(&Models.Book{}, &Models.Category{})
+	Config.DB.AutoMigrate(&Models.Book{}, &Models.Category{}) // Create table
+	Seeder.Load()                                             // Mockup data to table
 
-	r := Routers.SetupRouter()
+	r := Routers.SetupRouter(env_auth, env_middleware)
 	// running
 	srv := &http.Server{
 		Addr:    ":" + port,
