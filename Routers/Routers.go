@@ -31,6 +31,8 @@ func SetupRouter(env_auth auth.Env, env_middleware middleware.Env) *gin.Engine {
 	book := r.Group("/book", middleware.AuthorizationMiddleware(env_middleware))
 	{
 		book.GET("", Controllers.ListBook)
+		book.GET("custom_all", Controllers.ListBookCustom)
+		book.GET("custom_one", Controllers.GetOneBookCustom)
 		book.POST("", Controllers.AddNewBook)
 		book.GET(":id", Controllers.GetOneBook)
 		book.PUT(":id", Controllers.PutOneBook)

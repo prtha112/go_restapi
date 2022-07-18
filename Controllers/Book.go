@@ -1,6 +1,7 @@
 package Controllers
 
 import (
+	"go_restapi/Config"
 	"go_restapi/Models"
 	"go_restapi/Utility"
 
@@ -63,5 +64,43 @@ func DeleteBook(c *gin.Context) {
 		Utility.JSON(c, 404, book)
 	} else {
 		Utility.JSON(c, 200, book)
+	}
+}
+
+func ListBookCustom(c *gin.Context) {
+	var result = []struct {
+		Id   int
+		Name string
+	}{}
+
+	rows, err := Config.DB.Raw("select id, name from book").Rows()
+	defer rows.Close()
+	for rows.Next() {
+		Config.DB.ScanRows(rows, &result)
+	}
+	if err != nil {
+		Utility.JSON(c, 500, result)
+	} else {
+		Utility.JSON(c, 200, result)
+	}
+}
+
+func GetOneBookCustom(c *gin.Context) {
+	id := c.Params.ByName("id")
+
+	var result = struct {
+		Id   int
+		Name string
+	}{}
+
+	rows, err := Config.DB.Raw("select id, name from book where id = ?", id).Rows()
+	defer rows.Close()
+	for rows.Next() {
+		Config.DB.ScanRows(rows, &result)
+	}
+	if err != nil {
+		Utility.JSON(c, 500, result)
+	} else {
+		Utility.JSON(c, 200, result)
 	}
 }
