@@ -11,9 +11,9 @@ func ListCategory(c *gin.Context) {
 	var cate []Models.Category
 	err := Models.GetAllCategory(&cate)
 	if err != nil {
-		Utility.RespondJSON(c, 404, cate)
+		Utility.JSON(c, 404, cate)
 	} else {
-		Utility.RespondJSON(c, 200, cate)
+		Utility.JSON(c, 200, cate)
 	}
 }
 
@@ -22,8 +22,8 @@ func AddNewCategory(c *gin.Context) {
 	c.BindJSON(&cate)
 	err := Models.AddNewCategory(&cate)
 	if err != nil {
-		Utility.RespondJSON(c, 404, cate)
+		Utility.JSON(c, 404, cate)
 	} else {
-		Utility.RespondJSON(c, 200, cate)
+		Utility.JSON(c, 200, cate)
 	}
 }

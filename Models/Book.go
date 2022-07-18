@@ -23,7 +23,7 @@ func (b *Book) TableName() string {
 }
 
 func GetAllBook(b *[]Book) (err error) {
-	if err = Config.DB.Find(b).Error; err != nil {
+	if err = Config.DB.Preload("Category").Find(b).Error; err != nil {
 		return err
 	}
 	return nil
