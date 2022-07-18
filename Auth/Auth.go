@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -44,8 +43,6 @@ func LoginHandler(c *gin.Context, env Env) {
 	token = jwt.NewWithClaims(jwt.SigningMethodHS256, &jwt.StandardClaims{
 		ExpiresAt: ExpiresAt.Unix(),
 	})
-
-	fmt.Println(ExpiresAt)
 
 	tokenString, err := token.SignedString([]byte(env.Jwtsignature))
 	if err != nil {

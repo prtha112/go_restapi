@@ -29,3 +29,20 @@ func AddNewCategory(c *Category) (err error) {
 	}
 	return nil
 }
+
+func GetOneCategory(c *Category, id string) (err error) {
+	if err := Config.DB.Where("id = ?", id).First(c).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func PutOneCategory(c *Category, id string) (err error) {
+	Config.DB.Save(c)
+	return nil
+}
+
+func DeleteCategory(c *Category, id string) (err error) {
+	Config.DB.Where("id = ?", id).Delete(c)
+	return nil
+}

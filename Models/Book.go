@@ -13,7 +13,7 @@ type Book struct {
 	ID         uint   `gorm:"primary_key" json:"id"`
 	Name       string `json:"name"`
 	CategoryID int
-	Category   Category
+	Category   Category  // ถ้าอยากให้เเสดงข้อมูลตอน Query ให้ใส่ Preload
 	Author     string    `json:"author"`
 	CreatedAt  time.Time `gorm:"default now()"`
 }
@@ -23,6 +23,7 @@ func (b *Book) TableName() string {
 }
 
 func GetAllBook(b *[]Book) (err error) {
+	// ถ้าไม่ใส่ Preload จะไม่ Join Data กับ Category
 	if err = Config.DB.Preload("Category").Find(b).Error; err != nil {
 		return err
 	}
