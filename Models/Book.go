@@ -3,16 +3,19 @@ package Models
 import (
 	"fmt"
 	"go_restapi/Config"
+	"time"
 
 	_ "gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 type Book struct {
-	gorm.Model
-	Name     string `json:"name"`
-	Author   string `json:"author"`
-	Category string `json:"category"`
+	// gorm.Model
+	ID         uint   `gorm:"primary_key" json:"id"`
+	Name       string `json:"name"`
+	CategoryID int
+	Category   Category
+	Author     string    `json:"author"`
+	CreatedAt  time.Time `gorm:"default now()"`
 }
 
 func (b *Book) TableName() string {

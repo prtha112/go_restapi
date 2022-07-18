@@ -4,12 +4,12 @@ import (
 	"go_restapi/Config"
 
 	_ "gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 type Category struct {
-	gorm.Model
-	Name string `json:"name"`
+	// gorm.Model
+	ID   uint   `gorm:"primary_key" json:"id"`
+	Name string `gorm:"not null" json:"name"`
 }
 
 func (c *Category) TableName() string {

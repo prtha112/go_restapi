@@ -12,7 +12,7 @@ type ResponseData struct {
 	Data   interface{}
 }
 
-func RespondJSON(w *gin.Context, status int, payload interface{}) {
+func RespondJSON(result *gin.Context, status int, payload interface{}) {
 	fmt.Println("status ", status)
 	var res ResponseData
 
@@ -20,5 +20,5 @@ func RespondJSON(w *gin.Context, status int, payload interface{}) {
 	//res.Meta = utils.ResponseMessage(status)
 	res.Data = payload
 
-	w.JSON(200, res)
+	result.JSON(200, res)
 }
