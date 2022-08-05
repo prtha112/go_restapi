@@ -9,6 +9,7 @@ learn sturcture of rest api.
 - Dockerfile / Build Command
 - Json web token (Authen JWT)
 - Test
+- Swagger
 - Graceful shutdown
 
 ```sh
