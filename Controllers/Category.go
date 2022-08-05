@@ -7,6 +7,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ListCategory godoc
+// @summary Get Category
+// @description  Get Category by id
+// @tags Category
+// @security ApiKeyAuth
+// @id ListCategory
+// @accept json
+// @produce json
+// @param id path int true "id of Category to be gotten"
+// @response 200 {object} Models.Category "OK"
+// @Router /api/v1/category/:id [get]
 func ListCategory(c *gin.Context) {
 	var cate []Models.Category
 	err := Models.GetAllCategory(&cate)

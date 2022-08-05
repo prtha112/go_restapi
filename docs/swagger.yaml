@@ -1,0 +1,52 @@
+basePath: /api/v1
+definitions:
+  Models.Category:
+    properties:
+      id:
+        description: gorm.Model
+        type: integer
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /api/v1/category/:id:
+    get:
+      consumes:
+      - application/json
+      description: Get Category by id
+      operationId: ListCategory
+      parameters:
+      - description: id of Category to be gotten
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Models.Category'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Category
+      tags:
+      - Category
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

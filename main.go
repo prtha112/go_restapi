@@ -18,14 +18,42 @@ import (
 	"github.com/pseidemann/finish"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	"go_restapi/docs"
 )
 
 var err error
 
+// @title           Swagger Example API
+// @version         1.0
+// @description     This is a sample server celler server.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /api/v1
+
+// @securityDefinitions.basic  BasicAuth
 func main() {
 	var err error
 	var env_auth auth.Env
 	var env_middleware middleware.Env
+
+	docs.SwaggerInfo.Title = "Swagger Example API"
+	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "petstore.swagger.io"
+	docs.SwaggerInfo.BasePath = "/v2"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 	err = godotenv.Load()
 	if err != nil {
@@ -58,6 +86,7 @@ func main() {
 	Seeder.Load()                                             // Mockup data to table
 
 	r := Routers.SetupRouter(env_auth, env_middleware)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// running
 	srv := &http.Server{
 		Addr:    ":" + port,

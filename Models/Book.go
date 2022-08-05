@@ -10,6 +10,7 @@ import (
 
 type Book struct {
 	// gorm.Model
+
 	ID         uint   `gorm:"primary_key" json:"id"`
 	Name       string `json:"name"`
 	CategoryID int

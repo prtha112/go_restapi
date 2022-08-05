@@ -3,6 +3,15 @@ test:
 	go test -v --run xxxxxx
 	go test -v ./
 
+document-swagger:
+	swagger init spec \
+		--title "A Todo list application" \
+		--description "From the todo list tutorial on goswagger.io" \
+		--version 1.0.0 \
+		--scheme http
+	touch Document/swagger.yml
+	swagger generate spec -o ./Document/swagger.yml
+
 build:
 	go mod download
 	GOARCH=amd64

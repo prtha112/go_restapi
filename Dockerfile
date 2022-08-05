@@ -5,18 +5,17 @@ WORKDIR /app
 
 COPY . ./
 
-RUN make build
-
+RUN go mod download
+RUN GOARCH=amd64
+RUN go build -o /go/bin/app
 
 # Deploy
 FROM gcr.io/distroless/base-debian10
 
-COPY --from=build /go/bin/app /app
+WORKDIR /app
+
+COPY --from=build /go/bin/app .
 
 EXPOSE 8081
 
-# USER nonroot:nonroot
-USER root:root
-
-CMD ["/app"]
-
+CMD ["./app"]
