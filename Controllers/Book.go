@@ -29,6 +29,17 @@ func AddNewBook(c *gin.Context) {
 	}
 }
 
+// GetOneBook godoc
+// @summary Get Book
+// @description  Get Book by id
+// @tags Book
+// @security ApiKeyAuth
+// @id Book
+// @accept json
+// @produce json
+// @param id path int true "id of Book to be gotten"
+// @response 200 {object} Models.Book "OK"
+// @Router /book/:id [get]
 func GetOneBook(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var book Models.Book

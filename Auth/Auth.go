@@ -19,6 +19,17 @@ type Env struct {
 	Apikey        string
 }
 
+// LoginHandler 	godoc
+// @summary 		Post LoginHandler
+// @description		Get LoginHandler by id
+// @tags			Auth
+// @security		ApiKeyAuth
+// @id				LoginHandler
+// @accept			json
+// @produce			json
+// @param			id path int true "id of LoginHandler to be gotten"
+// @response 		200 {object} Login "OK"
+// @Router 			/login [post]
 func LoginHandler(c *gin.Context, env Env) {
 	// implement login logic here
 	var Apikey string

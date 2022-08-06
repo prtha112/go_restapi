@@ -1,5 +1,20 @@
-basePath: /api/v1
 definitions:
+  Models.Book:
+    properties:
+      author:
+        type: string
+      category:
+        $ref: '#/definitions/Models.Category'
+        description: ถ้าอยากให้เเสดงข้อมูลตอน Query ให้ใส่ Preload
+      categoryID:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
   Models.Category:
     properties:
       id:
@@ -8,19 +23,15 @@ definitions:
       name:
         type: string
     type: object
-host: localhost:8080
+  auth.Login:
+    properties:
+      jwt_password:
+        type: string
+      jwt_username:
+        type: string
+    type: object
 info:
-  contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server celler server.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
-  version: "1.0"
+  contact: {}
 paths:
   /api/v1/category/:id:
     get:
@@ -46,7 +57,52 @@ paths:
       summary: Get Category
       tags:
       - Category
-securityDefinitions:
-  BasicAuth:
-    type: basic
+  /book/:id:
+    get:
+      consumes:
+      - application/json
+      description: Get Book by id
+      operationId: Book
+      parameters:
+      - description: id of Book to be gotten
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Models.Book'
+      security:
+      - ApiKeyAuth: []
+      summary: Get Book
+      tags:
+      - Book
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Get LoginHandler by id
+      operationId: LoginHandler
+      parameters:
+      - description: id of LoginHandler to be gotten
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.Login'
+      security:
+      - ApiKeyAuth: []
+      summary: Post LoginHandler
+      tags:
+      - Auth
 swagger: "2.0"

@@ -3,7 +3,7 @@ test:
 	go test -v --run xxxxxx
 	go test -v ./
 
-document-swagger:
+swagger:
 	swag init --md ./
 
 build:
