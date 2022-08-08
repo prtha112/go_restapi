@@ -22,7 +22,7 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
-	"go_restapi/docs"
+	docs "go_restapi/Document"
 )
 
 var err error

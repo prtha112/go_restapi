@@ -4,7 +4,7 @@ test:
 	go test -v ./
 
 swagger:
-	swag init --md ./
+	swag init --md ./ -o Document
 
 build:
 	go mod download
