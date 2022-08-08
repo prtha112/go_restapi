@@ -69,7 +69,9 @@ func main() {
 	Seeder.Load()                                             // Mockup data to table
 
 	r := Routers.SetupRouter(env_auth, env_middleware)
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	if "pub" == "pub" {
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 	// running
 	srv := &http.Server{
 		Addr:    ":" + port,
