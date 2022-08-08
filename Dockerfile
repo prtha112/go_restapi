@@ -15,6 +15,7 @@ FROM gcr.io/distroless/base-debian10
 WORKDIR /app
 
 COPY --from=build /go/bin/app .
+COPY --from=build /app/.env .
 
 EXPOSE 8081
 
